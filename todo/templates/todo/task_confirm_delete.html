@@ -1,0 +1,11 @@
+{% extends 'base.html' %} 
+{% block body %}
+
+  <a href=" {% url 'todo:tasks' %} " ></a>
+  <form method = "POST">
+    {% csrf_token %}
+    <p>are you want to delete {{object}} ? </p>
+    <input type="submit" value = "delete" />
+  </form>
+
+{% endblock body %}

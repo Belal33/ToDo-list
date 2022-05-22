@@ -1,0 +1,45 @@
+{% extends 'base.html' %} 
+
+
+{% block body %}
+<h1>Todo list </h1>
+
+{% if request.user.is_authenticated %}
+  <h2 class = "user-name"> Hello {{ request.user }} </h2>  
+  <span class = "btn"><a href ="{% url 'users:logout'%}">Logout </a></span>
+
+  <form>
+    <input type = "text" name = "search-area"   placeholder="search" value=" {{search_area_data}} "  />
+    <input type = "submit" value = "search" />
+  </form>
+{% endif %}
+    <hr>
+    
+    
+    
+</br>
+{% comment %}########### manage tasks #############{% endcomment %}
+<div class = "tasks-list">
+  {% for task in object_list %}
+    <div class = "task"> 
+      <div>
+        {{task}}   
+        {% if task.complete %}
+          <strong style="color:#de5cff;font-size: 16px">  __Finished </strong>
+        {% endif %} 
+      </div>
+      <div><a href ="{% url 'todo:task' task.id %}">View </a> </div>
+      <div><a  href ="{% url 'todo:task-update' task.id %}">Edit </a> </div>
+      <div><a  href ="{% url 'todo:task-delete' task.id %}">Delete </a> </div>
+    </div>
+    <hr style=" background-color:darkgray; border: none; height: 1px;">
+
+  {% empty %}
+    <h3> no items</h3>
+
+  {% endfor %}
+</div>
+{% comment %}######################################{% endcomment %}
+  
+<p class = "btn"><a href ="{% url 'todo:task-create' %}">Add task </a> </p>
+{% endblock body %}
